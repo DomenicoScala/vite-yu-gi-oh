@@ -22,21 +22,23 @@
             <section class="bg-warning">
                     <div class="container">
                         <div class="main-bg">
-                            <select name="Alien" id="">
-                                <option value="" v-for="(archetipe,i) in store.archetipe">{{ archetipe.archetype_name }}</option>
+                            <select name="Alien" id="" v-model="store.selectArchetipe" @change="$emit('searchCardByArchetype')">
+                                <option value="">Tutte le Carte</option>
+                                <option name="Alien" :value="archetipe" 
+                                v-for="(archetipe,i) in store.archetipe">{{ archetipe }}</option>
                             </select>
                         </div>
 
                         <section>
                             <div class="container bg-white px-5 py-5">
                                 <div class="number-cards bg-black text-light">
-                                    <p>Found {{ store.cards.meta.current_rows }} Cards</p>
+                                    <p>Found Cards</p>
                                 </div>
                                 
                                 <div class="card-container">
                                     <div class="row">
                                         <AppSingleCard
-                                        v-for="(cart,i) in store.cards.data"
+                                        v-for="(cart, i) in store.cards"
                                         :card="cart"/>
                                     </div>
                                 </div>

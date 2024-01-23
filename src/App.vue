@@ -12,7 +12,35 @@
             };
         },
         methods:{
+            getAllCards() {
+                if(this.store.selectArchetipe == ''){
+                axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0')
+                .then((res) => {
+                    this.store.cards = res.data.data;
+                })
+                }else{
+                axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0', {
+                    params:{
+                        archetype: this.store.selectArchetipe,
+                    }
+                })
+                .then((res) => {
+                    this.store.cards = res.data.data;
+                })
+            }
 
+            },
+            
+            getAllArchetypes(){
+                axios
+                .get('https://db.ygoprodeck.com/api/v7/archetypes.php')
+                .then((responseArchetipe)=>{
+                    for(let i = 0; i < responseArchetipe.data.length; i++){
+                       this.store.archetipe.push(responseArchetipe.data[i].archetype_name)
+                       console.log(responseArchetipe)
+                    }
+                })
+            }
         },
         components:{
             AppHeader,
@@ -20,19 +48,8 @@
             AppFooter
         },
         created(){
-            axios
-            .get ('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0')
-            .then((response) =>{
-                console.log(response.data)
-                this.store.cards = response.data;
-                console.log(this.store)
-            }),
-            axios
-            .get('https://db.ygoprodeck.com/api/v7/archetypes.php')
-            .then((responseArchetipe)=>{
-                this.store.archetipe = responseArchetipe.data
-                console.log(responseArchetipe)
-            })
+            this.getAllCards();
+            this.getAllArchetypes();
         }
     }
 </script>
@@ -40,7 +57,7 @@
 <template>
         <AppHeader/>
 
-        <AppMain/>
+        <AppMain @searchCardByArchetype="getAllCards()" />
 
         <AppFooter/>
 </template>
