@@ -23,7 +23,7 @@
                     <div class="container">
                         <div class="main-bg">
                             <select name="Alien" id="">
-                                <option value="">Alien</option>
+                                <option value="" v-for="(archetipe,i) in store.archetipe">{{ archetipe.archetype_name }}</option>
                             </select>
                         </div>
 

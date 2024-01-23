@@ -25,9 +25,13 @@
             .then((response) =>{
                 console.log(response.data)
                 this.store.cards = response.data;
-
-                console.log(this.cards)
                 console.log(this.store)
+            }),
+            axios
+            .get('https://db.ygoprodeck.com/api/v7/archetypes.php')
+            .then((responseArchetipe)=>{
+                this.store.archetipe = responseArchetipe.data
+                console.log(responseArchetipe)
             })
         }
     }
